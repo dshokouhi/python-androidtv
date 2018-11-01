@@ -9,7 +9,7 @@ setup(
     author='Jeff Irion',
     author_email='jefflirion@users.noreply.github.com',
     packages=['androidtv'],
-    install_requires=['pycryptodome', 'rsa', 'adb>=1.3.0'],
+    install_requires=['rsa', 'adb>=1.3.0'],
     classifiers=[
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
