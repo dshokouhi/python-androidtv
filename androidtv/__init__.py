@@ -219,9 +219,9 @@ class AndroidTV:
             self.muted = re.findall(MUTED_REGEX, stream_block,
                                     re.DOTALL | re.MULTILINE)[0] == 'true'
 
-            volume_level = re.findall(self.device + DEVICE_REGEX, stream_block,
-                                      re.DOTALL | re.MULTILINE)[0]
-            self.volume = round(1/15 * float(volume_level), 2)
+            #volume_level = re.findall(self.device + DEVICE_REGEX, stream_block,
+            #                          re.DOTALL | re.MULTILINE)[0]
+            #self.volume = round(1/15 * float(volume_level), 2)
 
             self.app_id = self.current_app
             # self.app_name = self.app_id
@@ -317,8 +317,14 @@ class AndroidTV:
         if not self._adb:
             return
         if grep:
-            return self._adb.Shell('dumpsys {0} | grep "{1}"'.format(service, grep))
-        return self._adb.Shell('dumpsys {0}'.format(service))
+            command = 'dumpsys {0} | grep "{1}"'.format(service, grep)
+            result = self._adb.Shell('dumpsys {0} | grep "{1}"'.format(service, grep))
+            logging.info("command %s produced \n %s", command, result)
+            return result
+        command = 'dumpsys {0}'.format(service)
+        result = self._adb.Shell('dumpsys {0}'.format(service))
+        logging.info("command %s produced \n %s", command, result)
+        return result
 
     def _dump_has(self, service, grep, search):
         """ Check if a dump has particular content.
